@@ -34,9 +34,35 @@ public class MessageDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            JDBCUtil.release(connection, pstmt, resultSet);
         }
 
         return messages;
     }
+
+    public int getCount() {
+        int count = 0;
+        String sql = "SELECT count(*) AS total FROM messagelist";
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+        try {
+            connection = JDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(sql);
+            resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.release(connection, pstmt, resultSet);
+        }
+
+        return count;
+    }
+
+
 
 }
