@@ -9,9 +9,13 @@ public class MessageService {
 
     private MessageDao messageDao;
 
+    public MessageService() {
+        messageDao = new MessageDao();
+    }
+
     public List<Message> getMessage(int page, int size) {
 
-        return null;
+        return messageDao.getMessage(page, size);
     }
 
 }
